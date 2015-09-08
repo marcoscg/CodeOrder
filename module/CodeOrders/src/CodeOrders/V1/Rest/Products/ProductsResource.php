@@ -38,7 +38,7 @@ class ProductsResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+        return $this->repository->delete($id);
     }
 
     /**
@@ -107,7 +107,7 @@ class ProductsResource extends AbstractResourceListener
     public function update($id, $data)
     {
         $data = json_encode($data);
-        
+
         return $this->repository->update($id, $data);
     }
 }

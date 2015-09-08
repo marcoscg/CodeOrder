@@ -55,4 +55,12 @@ class ProductsRepository
         return $resultSet->current();
 
     }
+
+    public function delete($id)
+    {
+        $resultSet = $this->tableGateway->delete(['id' => (int)$id]);
+
+        return $resultSet;
+
+    }
 }
