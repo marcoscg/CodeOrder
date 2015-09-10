@@ -20,10 +20,11 @@ class UsersRepositoryFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $dbAdapter = $serviceLocator->get('DbAdapter');
-        //$userMapper = new UsersMapper();
-        //$hydrator = new HydratingResultSet($userMapper, new UsersEntity());
 
-        $hydrator = new HydratingResultSet(new ClassMethods(), new UsersEntity());
+        $userMapper = new UsersMapper();
+        $hydrator = new HydratingResultSet($userMapper, new UsersEntity());
+
+        //$hydrator = new HydratingResultSet(new ClassMethods(), new UsersEntity());
 
         $tableGateway = new TableGateway('oauth_users', $dbAdapter, null, $hydrator);
 

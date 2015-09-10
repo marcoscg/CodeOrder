@@ -25,8 +25,6 @@ class ProductsResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $data = json_encode($data);
-
         return $this->repository->insert($data);
     }
 
@@ -106,8 +104,6 @@ class ProductsResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $data = json_encode($data);
-
         return $this->repository->update($id, $data);
     }
 }

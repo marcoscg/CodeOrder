@@ -11,6 +11,7 @@ namespace CodeOrders\V1\Rest\Users;
 
 use Zend\Db\TableGateway\TableGatewayInterface;
 use Zend\Paginator\Adapter\DbTableGateway;
+use Zend\Stdlib\Hydrator\ObjectProperty;
 
 class UsersRepository
 {
@@ -42,17 +43,25 @@ class UsersRepository
 
     public function update($id, $data)
     {
+
+        $hydrator = new ObjectProperty();
+        $data = $hydrator->extract($data);
+
         $resultSet = $this->tableGateway->update($data,['id' => (int)$id]);
 
-        return $resultSet->current();
+        return $resultSet;
 
     }
 
     public function insert($data)
     {
-        $resultSet = $this->tableGateway->insert($data);
 
-        return $resultSet->current();
+        $hydrator = new ObjectProperty();
+        $data = $hydrator->extract($data);
+
+        $resultSet = $this->tableGateway->insert((array)$data);
+
+        return $resultSet;
 
     }
 
@@ -62,6 +71,11 @@ class UsersRepository
 
         return $resultSet;
 
+    }
+
+    public function findByUsername($username)
+    {
+        return $this->tableGateway->select(['username' => $username])->current();
     }
     
 

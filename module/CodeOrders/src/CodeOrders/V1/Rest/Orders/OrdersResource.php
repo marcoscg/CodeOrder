@@ -1,22 +1,11 @@
 <?php
-namespace CodeOrders\V1\Rest\Users;
+namespace CodeOrders\V1\Rest\Orders;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 
-class UsersResource extends AbstractResourceListener
+class OrdersResource extends AbstractResourceListener
 {
-    private $repository;
-
-    /**
-     * UsersResource constructor.
-     */
-    public function __construct(UsersRepository $repository)
-    {
-        $this->repository = $repository;
-    }
-
-
     /**
      * Create a resource
      *
@@ -25,7 +14,7 @@ class UsersResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return $this->repository->insert($data);
+        return new ApiProblem(405, 'The POST method has not been defined');
     }
 
     /**
@@ -36,7 +25,7 @@ class UsersResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        return $this->repository->delete($id);
+        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
     }
 
     /**
@@ -58,15 +47,7 @@ class UsersResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $username = $this->getIdentity()->getRoleId();
-
-        $user = $this->repository->findByUsername($username);
-
-        if ($user->getRole() == "salesman1") {
-            return new ApiProblem(403,'Usuario sem permissao!');
-        }
-
-        return $this->repository->find($id);
+        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
     }
 
     /**
@@ -77,7 +58,7 @@ class UsersResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return $this->repository->findAll();
+        return new ApiProblem(405, 'The GET method has not been defined for collections');
     }
 
     /**
@@ -112,9 +93,6 @@ class UsersResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        return $this->repository->update($id, $data);
+        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
     }
-
-
-
 }

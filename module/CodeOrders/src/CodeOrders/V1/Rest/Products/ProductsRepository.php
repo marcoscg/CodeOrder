@@ -10,7 +10,9 @@ namespace CodeOrders\V1\Rest\Products;
 
 
 use Zend\Db\TableGateway\TableGatewayInterface;
+use Zend\Form\Annotation\Hydrator;
 use Zend\Paginator\Adapter\DbTableGateway;
+use Zend\Stdlib\Hydrator\ObjectProperty;
 
 class ProductsRepository
 {
@@ -40,19 +42,25 @@ class ProductsRepository
         return $resultSet->current();
     }
 
-    public function update($id, $data)
+    public function update($id,  $data)
     {
+        $hydrator = new ObjectProperty();
+        $data = $hydrator->extract($data);
+
         $resultSet = $this->tableGateway->update($data,['id' => (int)$id]);
 
-        return $resultSet->current();
+        return $resultSet;
 
     }
 
     public function insert($data)
     {
+        $hydrator = new ObjectProperty();
+        $data = $hydrator->extract($data);
+
         $resultSet = $this->tableGateway->insert($data);
 
-        return $resultSet->current();
+        return $resultSet;
 
     }
 
