@@ -6,6 +6,16 @@ use ZF\Rest\AbstractResourceListener;
 
 class OrdersResource extends AbstractResourceListener
 {
+    private $repository;
+
+    /**
+     * OrdersResource constructor.
+     */
+    public function __construct(OrdersRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     /**
      * Create a resource
      *
@@ -14,7 +24,13 @@ class OrdersResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        $res = $this->repository->insert($data);
+
+        if ($res == 'error') {
+            return new ApiProblem(405, 'Operacao cancelada!');
+        }
+
+        return $res;
     }
 
     /**
@@ -58,7 +74,7 @@ class OrdersResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        return $this->repository->findAll();
     }
 
     /**

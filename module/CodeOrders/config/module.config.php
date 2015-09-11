@@ -163,7 +163,7 @@ return array(
                 1 => 'POST',
             ),
             'collection_query_whitelist' => array(),
-            'page_size' => 25,
+            'page_size' => '25',
             'page_size_param' => null,
             'entity_class' => 'CodeOrders\\V1\\Rest\\Orders\\OrdersEntity',
             'collection_class' => 'CodeOrders\\V1\\Rest\\Orders\\OrdersCollection',
@@ -284,7 +284,7 @@ return array(
                 'entity_identifier_name' => 'id',
                 'route_name' => 'code-orders.rest.orders',
                 'route_identifier_name' => 'orders_id',
-                'hydrator' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
+                'hydrator' => 'Zend\\Stdlib\\Hydrator\\ClassMethods',
             ),
             'CodeOrders\\V1\\Rest\\Orders\\OrdersCollection' => array(
                 'entity_identifier_name' => 'id',
@@ -534,6 +534,9 @@ return array(
             'CodeOrders\\V1\\Rest\\Products\\ProductsResource' => 'CodeOrders\\V1\\Rest\\Products\\ProductsResourceFactory',
             'CodeOrders\\V1\\Rest\\Products\\ProductsRepository' => 'CodeOrders\\V1\\Rest\\Products\\ProductsRepositoryFactory',
             'CodeOrders\\V1\\Rest\\Orders\\OrdersResource' => 'CodeOrders\\V1\\Rest\\Orders\\OrdersResourceFactory',
+            'CodeOrders\\V1\\Rest\\Orders\\OrdersRepository' => 'CodeOrders\\V1\\Rest\\Orders\\OrdersRepositoryFactory',
+            'CodeOrders\\V1\\Rest\\Orders\\OrderItemRepository' => 'CodeOrders\\V1\\Rest\\Orders\\OrderItemRepositoryFactory',
+            'CodeOrders\\V1\\Rest\\Orders\\OrdersService' => 'CodeOrders\\V1\\Rest\\Orders\\OrdersServiceFactory',
         ),
     ),
     'zf-mvc-auth' => array(

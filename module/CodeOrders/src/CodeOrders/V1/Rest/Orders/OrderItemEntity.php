@@ -9,7 +9,7 @@
 namespace CodeOrders\V1\Rest\Orders;
 
 
-class OrdersItemEntity
+class OrderItemEntity
 {
     protected $id;
     protected $order_id;
