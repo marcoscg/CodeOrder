@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic','starter.controllers'])
+angular.module('starter', ['ionic','starter.controllers','angular-oauth2'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -18,8 +18,16 @@ angular.module('starter', ['ionic','starter.controllers'])
   });
 })
 
-.config(function ($stateProvider, $urlRouterProvider) {
-	
+.config(function ($stateProvider, $urlRouterProvider, OAuthProvider) {
+
+	OAuthProvider.configure({
+		baseUrl: 'http://107.170.148.228/pedido',
+		clientId: 'testclient',
+		clientSecret: 'testpass',
+		grantPath: '/oauth',
+		revokePath: '/oauth'
+	})
+
 	$stateProvider
 		.state('tabs',{
 			url: '/t',
@@ -30,7 +38,8 @@ angular.module('starter', ['ionic','starter.controllers'])
 			url: '/orders',
 			views: {
 				'orders-tab': {
-					templateUrl: 'templates/orders.html'
+					templateUrl: 'templates/orders.html',
+					controller: 'OrdersCtrl'
 				}
 			}
 		})
@@ -39,6 +48,42 @@ angular.module('starter', ['ionic','starter.controllers'])
 			views: {
 				'create-tab': {
 					templateUrl: 'templates/create.html'
+				}
+			}
+		})
+		.state('tabs.product', {
+			url: '/product',
+			views: {
+				'product-tab': {
+					templateUrl: 'templates/product.html',
+					controller: 'ProductsCtrl'
+				}
+			}
+		})
+		.state('tabs.add_product', {
+			url: '/product',
+			views: {
+				'product-tab': {
+					templateUrl: 'templates/create_product.html',
+					controller: 'ProductsCtrl'
+				}
+			}
+		})
+		.state('tabs.edit_product', {
+			url: '/product/:index',
+			views: {
+				'product-tab': {
+					templateUrl: 'templates/edit_product.html',
+					controller: 'ProductsCtrl'
+				}
+			}
+		})
+		.state('tabs.ptype', {
+			url: '/ptype',
+			views: {
+				'ptype-tab': {
+					templateUrl: 'templates/ptype.html',
+					controller: 'PtypesCtrl'
 				}
 			}
 		})

@@ -5,6 +5,9 @@ class OrdersResourceFactory
 {
     public function __invoke($services)
     {
-        return new OrdersResource($services->get('CodeOrders\\V1\\Rest\\Orders\\OrdersRepository'));
+        $ordersRepository = $services->get('CodeOrders\\V1\\Rest\\Orders\\OrdersRepository');
+        $ordersService = $services->get('CodeOrders\\V1\\Rest\\Orders\\OrdersService');
+
+        return new OrdersResource($ordersRepository, $ordersService);
     }
 }

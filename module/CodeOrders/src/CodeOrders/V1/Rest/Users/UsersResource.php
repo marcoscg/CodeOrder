@@ -62,7 +62,7 @@ class UsersResource extends AbstractResourceListener
 
         $user = $this->repository->findByUsername($username);
 
-        if ($user->getRole() == "salesman1") {
+        if ($user->getRole() != "admin") {
             return new ApiProblem(403,'Usuario sem permissao!');
         }
 

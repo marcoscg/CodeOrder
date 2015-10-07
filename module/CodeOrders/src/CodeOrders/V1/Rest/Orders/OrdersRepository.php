@@ -63,39 +63,48 @@ class OrdersRepository
 
     public function insert($data)
     {
-        $hydrator = new ObjectProperty();
-        $data = $hydrator->extract($data);
+        $this->tableGateway->insert($data);
 
-        try {
-
-            $this->tableGateway->getAdapter()->getDriver()->getConnection()->beginTransaction();
-
-            $orderData = $data;
-            unset($orderData['item']);
-            $items = $data['item'];
-
-            $this->tableGateway->insert($orderData);
-            $id = $this->tableGateway->getLastInsertValue();
-
-            foreach ($items as $item) {
-                $item['order_id'] = $id;
-                $this->insertItem($item);
-            }
-
-            $this->tableGateway->getAdapter()->getDriver()->getConnection()->commit();
-
-        } catch (\Exception $e) {
-            $this->tableGateway->getAdapter()->getDriver()->getConnection()->rollback();
-
-            return 'error';
-        }
+        $id = $this->tableGateway->getLastInsertValue();
 
         return $id;
+    }
+
+    public function update($id,  $data)
+    {
+        $resultSet = $this->tableGateway->update($data,['id' => (int)$id]);
+
+        return $resultSet;
+    }
+
+    public function delete($id)
+    {
+        $resultSet = $this->tableGateway->delete(['id' => (int)$id]);
+
+        return $resultSet;
+
     }
 
     public function insertItem($data)
     {
         $this->tableGatewayItem->insert($data);
+
+        $id = $this->tableGatewayItem->getLastInsertValue();
+
+        return $id;
+    }
+
+    public function deleteItem($id)
+    {
+        $resultSet = $this->tableGatewayItem->delete(['order_id' => (int)$id]);
+
+        return $resultSet;
+
+    }
+
+    public function getTableGateway()
+    {
+        return $this->tableGateway;
     }
 
 }

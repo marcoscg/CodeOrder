@@ -1,0 +1,28 @@
+<div ng-init="getProducts()">
+<ion-header-bar class="bar-positive">
+    <button class="button button-icon ion-minus"
+            ng-click="data.showDelete = !data.showDelete">
+    </button>
+    <h1 class="title">Produtos</h1>
+    <button class="button button-icon ion-android-add" ng-click="addProduto();">
+    </button>
+</ion-header-bar>
+
+<div class="bar bar-subheader item-input-inset">
+    <label class="item-input-inset">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="search" ng-model="search" placeholder="Buscar Produto">
+    </label>
+</div>
+
+<ion-content class="has-subheader">
+    <ion-refresher on-refresh="doRefresh()"></ion-refresher>
+    <ion-list show-delete="data.showDelete">
+        <ion-item ng-click="get(product)" ng-repeat="product in products | filter: search">
+            {{product.name}}
+            <ion-delete-button class="ion-minus-circled" ng-click="onProductDelete(product);"></ion-delete-button>
+        </ion-item>
+    </ion-list>
+
+</ion-content>
+</div>

@@ -7,13 +7,15 @@ use ZF\Rest\AbstractResourceListener;
 class OrdersResource extends AbstractResourceListener
 {
     private $repository;
+    private $service;
 
     /**
      * OrdersResource constructor.
      */
-    public function __construct(OrdersRepository $repository)
+    public function __construct(OrdersRepository $repository, OrdersService $service)
     {
         $this->repository = $repository;
+        $this->service = $service;
     }
 
     /**
@@ -24,7 +26,7 @@ class OrdersResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $res = $this->repository->insert($data);
+        $res = $this->service->insert($data);
 
         if ($res == 'error') {
             return new ApiProblem(405, 'Operacao cancelada!');
@@ -41,7 +43,13 @@ class OrdersResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+        $res = $this->service->delete($id);
+
+        if ($res == 'error') {
+            return new ApiProblem(405, 'Operacao cancelada!');
+        }
+
+        return new ApiProblem(200, 'Exclusao concluida!');
     }
 
     /**
@@ -109,6 +117,12 @@ class OrdersResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
+        $res = $this->service->update($id, $data);
+
+        if ($res == 'error') {
+            return new ApiProblem(405, 'Operacao cancelada!');
+        }
+
+        return $res;
     }
 }
