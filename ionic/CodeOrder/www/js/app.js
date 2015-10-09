@@ -51,6 +51,15 @@ angular.module('starter', ['ionic','starter.controllers','angular-oauth2'])
 				}
 			}
 		})
+		.state('tabs.show', {
+			url: '/orders/:id',
+			views: {
+				'orders-tab': {
+					templateUrl: 'templates/order-show.html',
+					controller: 'OrderShowCtrl'
+				}
+			}
+		})
 		.state('tabs.product', {
 			url: '/product',
 			views: {

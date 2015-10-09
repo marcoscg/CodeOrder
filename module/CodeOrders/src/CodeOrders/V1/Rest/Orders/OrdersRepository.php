@@ -20,14 +20,16 @@ class OrdersRepository
 
     private $tableGateway;
     private $tableGatewayItem;
+    private $tableGatewayClient;
 
     /**
      * UsersRepository constructor.
      */
-    public function __construct(TableGatewayInterface $tableGateway, TableGatewayInterface $tableGatewayItem)
+    public function __construct(TableGatewayInterface $tableGateway, TableGatewayInterface $tableGatewayItem, TableGatewayInterface $tableGatewayClient)
     {
         $this->tableGateway = $tableGateway;
         $this->tableGatewayItem = $tableGatewayItem;
+        $this->tableGatewayClient = $tableGatewayClient;
     }
 
     public function findAll()
@@ -58,7 +60,37 @@ class OrdersRepository
     {
         $resultSet = $this->tableGateway->select(['id' => (int)$id]);
 
-        return $resultSet->current();
+        if ($resultSet->count() == 1) {
+            $hydrator = new ClassMethods();
+            $hydrator->addStrategy('items', new OrderItemHydratorStrategy(new ClassMethods()));
+
+            $order = $resultSet->current();
+
+            $client = $this->tableGatewayClient->select(['id' => $order->getClientId()])->current();
+
+            $sql = $this->tableGatewayItem->getSql();
+
+            $select = $sql->select();
+            $select->join(
+                'products',
+                'order_items.product_id = products.id',
+                ['product_name' => 'name']
+            )->where(['order_id' => $order->getId()]);
+
+            $items = $this->tableGatewayItem->selectWith($select);
+
+            $order->setClient($client);
+
+            foreach ($items as $item) {
+                $order->addItem($item);
+            }
+
+            $data = $hydrator->extract($order);
+
+            return $data;
+        }
+
+        return false;
     }
 
     public function insert($data)

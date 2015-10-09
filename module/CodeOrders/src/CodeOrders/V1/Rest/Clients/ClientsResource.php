@@ -1,21 +1,20 @@
 <?php
-namespace CodeOrders\V1\Rest\Orders;
+namespace CodeOrders\V1\Rest\Clients;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 
-class OrdersResource extends AbstractResourceListener
+class ClientsResource extends AbstractResourceListener
 {
+
     private $repository;
-    private $service;
 
     /**
-     * OrdersResource constructor.
+     * UsersResource constructor.
      */
-    public function __construct(OrdersRepository $repository, OrdersService $service)
+    public function __construct(ClientsRepository $repository)
     {
         $this->repository = $repository;
-        $this->service = $service;
     }
 
     /**
@@ -26,13 +25,7 @@ class OrdersResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $res = $this->service->insert($data);
-
-        if ($res == 'error') {
-            return new ApiProblem(405, 'Operacao cancelada!');
-        }
-
-        return $res;
+        return new ApiProblem(405, 'The POST method has not been defined');
     }
 
     /**
@@ -43,13 +36,7 @@ class OrdersResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        $res = $this->service->delete($id);
-
-        if ($res == 'error') {
-            return new ApiProblem(405, 'Operacao cancelada!');
-        }
-
-        return new ApiProblem(200, 'Exclusao concluida!');
+        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
     }
 
     /**
@@ -117,12 +104,6 @@ class OrdersResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $res = $this->service->update($id, $data);
-
-        if ($res == 'error') {
-            return new ApiProblem(405, 'Operacao cancelada!');
-        }
-
-        return $res;
+        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
     }
 }

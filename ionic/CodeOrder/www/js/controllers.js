@@ -8,7 +8,7 @@ angular.module('starter.controllers', [])
                 OAuth.getAccessToken(data).then(function(){
                     $state.go('tabs.orders');
                 }, function(data){
-                    $scope.error_login = data; // "Usuario invalidos";
+                    $scope.error_login = "Usuario invalidos";
                 });
             }
 
@@ -19,7 +19,8 @@ angular.module('starter.controllers', [])
 
             $scope.getOrders = function() {
 
-                $http.get('http://107.170.148.228/pedido/orders')
+                //$http.get('http://107.170.148.228/pedido/orders')
+                $http.get('http://127.0.0.1:8080/orders')
                     .success(function(data) {
                         console.log(data);
                         $scope.orders = data._embedded.orders;
@@ -30,6 +31,10 @@ angular.module('starter.controllers', [])
 
             };
 
+            $scope.show = function(order) {
+                $state.go('tabs.show', {id: order.id});
+            }
+
             $scope.doRefresh = function() {
                 $scope.getOrders();
                 $scope.$broadcast('scroll.refreshComplete');
@@ -38,6 +43,26 @@ angular.module('starter.controllers', [])
             $scope.getOrders();
         }
     ])
+    .controller('OrderShowCtrl',['$scope','$http','$state', '$stateParams',
+        function($scope, $http, $state, $stateParams) {
+
+            $scope.getOrder = function() {
+
+                //$http.get('http://107.170.148.228/pedido/orders/'+$stateParams.id)
+                $http.get('http://127.0.0.1:8080/orders/'+$stateParams.id)
+                    .success(function (data) {
+                        console.log(data);
+                        $scope.order = data;
+                    })
+                    .error(function (data) {
+                        $scope.erro = data;
+                    });
+
+            }
+
+            $scope.getOrder();
+        }
+     ])
     .controller('PtypesCtrl',['$scope','$http','$state',
         function($scope, $http, $state) {
 

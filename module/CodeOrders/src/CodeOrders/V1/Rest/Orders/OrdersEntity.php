@@ -10,6 +10,7 @@ class OrdersEntity
     protected $total;
     protected $created_at;
     protected $items;
+    protected $client;
 
     /**
      * OrdersEntity constructor.
@@ -52,6 +53,24 @@ class OrdersEntity
     public function setClientId($client_id)
     {
         $this->client_id = $client_id;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * @param mixed $client_id
+     * @return OrdersEntity
+     */
+    public function setClient($client)
+    {
+        $this->client = $client;
         return $this;
     }
 
