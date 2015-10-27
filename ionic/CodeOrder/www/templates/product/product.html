@@ -19,7 +19,7 @@
     <ion-refresher on-refresh="doRefresh()"></ion-refresher>
     <ion-list show-delete="data.showDelete">
         <ion-item ng-click="get(product)" ng-repeat="product in products | filter: search">
-            {{product.name}}
+            {{product.id}} - {{product.name}}
             <ion-delete-button class="ion-minus-circled" ng-click="onProductDelete(product);"></ion-delete-button>
         </ion-item>
     </ion-list>

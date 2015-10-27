@@ -38,7 +38,7 @@ angular.module('starter', ['ionic','starter.controllers','angular-oauth2'])
 			url: '/orders',
 			views: {
 				'orders-tab': {
-					templateUrl: 'templates/orders.html',
+					templateUrl: 'templates/order/orders.html',
 					controller: 'OrdersCtrl'
 				}
 			}
@@ -47,7 +47,8 @@ angular.module('starter', ['ionic','starter.controllers','angular-oauth2'])
 			url: '/create',
 			views: {
 				'create-tab': {
-					templateUrl: 'templates/create.html'
+					templateUrl: 'templates/order/create.html',
+					controller: 'OrdersNewCtrl'
 				}
 			}
 		})
@@ -55,7 +56,7 @@ angular.module('starter', ['ionic','starter.controllers','angular-oauth2'])
 			url: '/orders/:id',
 			views: {
 				'orders-tab': {
-					templateUrl: 'templates/order-show.html',
+					templateUrl: 'templates/order/order-show.html',
 					controller: 'OrderShowCtrl'
 				}
 			}
@@ -64,7 +65,7 @@ angular.module('starter', ['ionic','starter.controllers','angular-oauth2'])
 			url: '/product',
 			views: {
 				'product-tab': {
-					templateUrl: 'templates/product.html',
+					templateUrl: 'templates/product/product.html',
 					controller: 'ProductsCtrl'
 				}
 			}
@@ -73,16 +74,16 @@ angular.module('starter', ['ionic','starter.controllers','angular-oauth2'])
 			url: '/product',
 			views: {
 				'product-tab': {
-					templateUrl: 'templates/create_product.html',
+					templateUrl: 'templates/product/create_product.html',
 					controller: 'ProductsCtrl'
 				}
 			}
 		})
 		.state('tabs.edit_product', {
-			url: '/product/:index',
+			url: '/product/:id',
 			views: {
 				'product-tab': {
-					templateUrl: 'templates/edit_product.html',
+					templateUrl: 'templates/product/edit_product.html',
 					controller: 'ProductsCtrl'
 				}
 			}

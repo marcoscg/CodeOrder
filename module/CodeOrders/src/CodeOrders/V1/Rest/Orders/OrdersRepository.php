@@ -102,7 +102,7 @@ class OrdersRepository
         return $id;
     }
 
-    public function update($id,  $data)
+    public function update(array $data, $id)
     {
         $resultSet = $this->tableGateway->update($data,['id' => (int)$id]);
 

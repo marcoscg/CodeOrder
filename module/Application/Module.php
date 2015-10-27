@@ -13,9 +13,14 @@ class Module
 {
     public function onBootstrap(MvcEvent $e)
     {
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+        header('Access-Control-Allow-Headers: Authorization, WWW-Authenticate, Origin, X-Requested-With, Content-Type, Accept');
+
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+
     }
 
     public function getConfig()
